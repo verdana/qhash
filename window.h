@@ -34,7 +34,7 @@ private slots:
     void onUpdateQueue(int);
     void onUpdateCurrentFile(QString);
     void onUpdateProgress(int);
-    void onUpdateTreeView(QString, QString, qint64);
+    void onUpdateTableView(QString, QString, qint64);
 
 private:
     Ui::Window *ui;

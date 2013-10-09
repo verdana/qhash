@@ -35,8 +35,8 @@ Window::Window(QWidget *parent) : QMainWindow(parent), ui(new Ui::Window)
             SIGNAL(updateProgress(int)),
             SLOT(onUpdateProgress(int)));
     connect(worker,
-            SIGNAL(updateTreeView(QString, QString, qint64)),
-            SLOT(onUpdateTreeView(QString, QString, qint64)));
+            SIGNAL(updateTableView(QString, QString, qint64)),
+            SLOT(onUpdateTableView(QString, QString, qint64)));
 }
 
 /**
@@ -86,7 +86,7 @@ void Window::setupButtons()
  */
 void Window::setupTableView()
 {
-    // 设置 TreeView 列名
+    // 设置 TableView 列名
     model = new QStandardItemModel(this);
     model->setColumnCount(4);
     model->setHeaderData(0, Qt::Horizontal, QStringLiteral("文件"));
@@ -313,9 +313,12 @@ void Window::onUpdateProgress(int num)
 /**
  * 更新
  *
- * @brief Window::onUpdateTreeView
+ * @brief Window::onUpdateTableView
+ * @param name
+ * @param hash
+ * @param size
  */
-void Window::onUpdateTreeView(QString name, QString hash, qint64 size)
+void Window::onUpdateTableView(QString name, QString hash, qint64 size)
 {
     QList<QStandardItem*> items;
     items << new QStandardItem(name)
@@ -340,7 +343,7 @@ void Window::dragEnterEvent(QDragEnterEvent *e)
 }
 
 /**
- * 拖放完成
+ * 完成拖放，启动后台线程
  *
  * @brief Window::dropEvent
  */
@@ -350,7 +353,6 @@ void Window::dropEvent(QDropEvent *e)
     foreach (const QUrl &url, e->mimeData()->urls()) {
         QString filepath = url.toLocalFile();
         if (false == filepath.isEmpty()) {
-            //this->startWorker(filepath);
             files << filepath;
         }
     }
@@ -361,7 +363,7 @@ void Window::dropEvent(QDropEvent *e)
  * 启动后台线程
  *
  * @brief Window::startWorker
- * @param filepath
+ * @param files
  */
 void Window::startWorker(QList<QString> files)
 {

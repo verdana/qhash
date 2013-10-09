@@ -106,6 +106,6 @@ void WorkerThread::run()
         }
         emit updateCurrentFile("");
         emit updateProgress(200);
-        emit updateTreeView(filename, hash, size);
+        emit updateTableView(filename, hash, size);
     }
 }

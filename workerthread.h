@@ -24,7 +24,7 @@ signals:
     void updateQueue(int count);
     void updateCurrentFile(QString filename);
     void updateProgress(int percent);
-    void updateTreeView(QString filename, QString hash, qint64 size);
+    void updateTableView(QString filename, QString hash, qint64 size);
 };
 
 #endif // WORKERTHREAD_H
